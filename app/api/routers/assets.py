@@ -3,10 +3,12 @@ from sqlalchemy.orm import Session
 from typing import Annotated
 
 from app.api.schemas.asset import AssetCreate, AssetResponse, AssetDetailResponse
-from app.api.schemas.variable import VariableResponse
+from app.api.schemas.variable import VariableDetailResponse
+from app.api.schemas.rule import RuleResponse
 from app.db.database import get_db
 from app.models.asset import Asset
 from app.models.variable import Variable
+from app.models.rule import Rule
 
 router = APIRouter(
     prefix="/assets",
@@ -29,15 +31,27 @@ def get_asset(asset_id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail="Asset not found")
     
     variables = db.query(Variable).filter(Variable.asset_id == asset_id).all()
-    variables_response = []
+    variables_response:list[VariableDetailResponse] = []
 
     for variable in variables:
-        variables_response.append(VariableResponse(
+        rules = db.query(Rule).filter(Rule.variable_id == variable.id).all()
+    
+        rules_response: list[RuleResponse] = []
+        for rule in rules:            
+            rules_response.append(RuleResponse(
+                id=rule.id,
+                operator=rule.operator,
+                value=rule.value,
+                variable_id=rule.variable_id
+            ))
+
+        variables_response.append(VariableDetailResponse(
             id=variable.id,
             name=variable.name,
             unit=variable.unit,
             value=variable.value,
-            asset_id=variable.asset_id
+            asset_id=variable.asset_id,
+            rules=rules_response
         ))
     
     return AssetDetailResponse(
