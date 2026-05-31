@@ -36,6 +36,7 @@ def get_asset(asset_id: int, db: db_dependency):
             id=variable.id,
             name=variable.name,
             unit=variable.unit,
+            value=variable.value,
             asset_id=variable.asset_id
         ))
     
