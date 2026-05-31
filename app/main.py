@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.routers import assets
+from app.api.routers import assets, variables
 from app.models.asset import Asset
 from app.models.variable import Variable
 from app.models.rule import Rule
@@ -13,6 +13,7 @@ app = FastAPI(
 Base.metadata.create_all(bind=engine)
 
 app.include_router(assets.router)
+app.include_router(variables.router)
 
 @app.get("/health")
 def health():
