@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from app.api.schemas.rule import RuleResponse
 
 class VariableCreate(BaseModel):
     name: str
@@ -18,4 +19,4 @@ class VariableDetailResponse(BaseModel):
     name: str
     unit: str
     asset_id: int
-    rules: list = []
+    rules: list[RuleResponse] = []
