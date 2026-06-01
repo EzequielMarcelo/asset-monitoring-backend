@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base, DeclarativeMeta
 
-URL_DATABASE = "postgresql://postgres:admin@localhost:5432/test"
+URL_DATABASE = "postgresql://postgres:postgres@db:5432/asset_monitoring"
 
 engine = create_engine(URL_DATABASE)
 
