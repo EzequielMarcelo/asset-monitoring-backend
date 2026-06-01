@@ -34,7 +34,8 @@ def get_rules(variable_id: int, db: db_dependency):
         rules_response.append(RuleResponse(
             id=rule.id,
             operator=rule.operator,
-            value=rule.value
+            value=rule.value,
+            variable_id=rule.variable_id
         ))
         
     return rules_response
