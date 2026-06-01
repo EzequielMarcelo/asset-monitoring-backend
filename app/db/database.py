@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base, DeclarativeMeta
 
-URL_DATABASE = "postgresql://postgres:postgres@db:5432/asset_monitoring"
+from app.core.config import settings
 
-engine = create_engine(URL_DATABASE)
+engine = create_engine(settings.database_url)
 
 SessionLocal = sessionmaker(autoflush=False, bind=engine)
 
